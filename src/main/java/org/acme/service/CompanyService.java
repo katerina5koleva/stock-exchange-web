@@ -40,9 +40,17 @@ public class CompanyService {
     public CompanyDto getCompanyById(Long id) {
         Company company = companyRepository.findById(id);
         if (company == null) {
-            throw new NotFoundException();
+            throw new NotFoundException("Company with id " + id + " not found");
         }
         return companyMapper.toDTO(company);
+    }
+
+    public Company getCompanyEntityById(Long id) {
+        Company company = companyRepository.findById(id);
+        if (company == null) {
+            throw new NotFoundException("Company with id " + id + " not found");
+        }
+        return company;
     }
 
     @Transactional
