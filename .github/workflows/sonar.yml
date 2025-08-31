@@ -3,7 +3,7 @@ name: SonarCloud
 on:
   push:
     branches:
-      - '**'
+      - '**'  
 
 jobs:
   sonar:
@@ -31,15 +31,9 @@ jobs:
           restore-keys: |
             gradle-${{ runner.os }}-
 
-      - name: Build project
-        run: ./gradlew build
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          args: >
-            -Dsonar.projectKey=katerina5koleva_stock-exchange-web
-            -Dsonar.organization=katerina5koleva
-            -Dsonar.host.url=https://sonarcloud.io
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Build and run SonarCloud
+        run: ./gradlew build sonarqube \
+              -Dsonar.organization=katerina5koleva \
+              -Dsonar.projectKey=katerina5koleva_stock-exchange-web \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
