@@ -32,9 +32,6 @@ jobs:
             gradle-${{ runner.os }}-
 
       - name: Build and run SonarCloud analysis
-        run: ./gradlew build sonarqube \
-              -Dsonar.organization=katerina5koleva \
-              -Dsonar.projectKey=katerina5koleva_stock-exchange-web \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew build sonarqube -Dsonar.organization=katerina5koleva -Dsonar.projectKey=katerina5koleva_stock-exchange-web -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
 
