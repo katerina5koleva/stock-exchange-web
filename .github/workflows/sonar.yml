@@ -9,6 +9,14 @@ jobs:
   sonar:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
+    
+    env:
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_URL: ${{ secrets.DB_URL }}
+      FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
     steps:
       - uses: actions/checkout@v4
 
