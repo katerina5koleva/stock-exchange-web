@@ -31,7 +31,7 @@ jobs:
           restore-keys: |
             gradle-${{ runner.os }}-
 
-      - name: Build and run SonarCloud
+      - name: Build and run SonarCloud analysis
         run: ./gradlew build sonarqube \
               -Dsonar.organization=katerina5koleva \
               -Dsonar.projectKey=katerina5koleva_stock-exchange-web \
