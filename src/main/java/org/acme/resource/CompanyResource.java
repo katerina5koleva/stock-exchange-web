@@ -13,8 +13,13 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CompanyResource {
+
+    private final CompanyService companyService;
+
     @Inject
-    CompanyService companyService;
+    public CompanyResource(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @GET
     public List<CompanyDto> getAll() {
