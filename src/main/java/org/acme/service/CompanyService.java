@@ -15,10 +15,14 @@ import java.util.List;
 
 @ApplicationScoped
 public class CompanyService {
+    private final CompanyRepository companyRepository;
+    private final CompanyMapper companyMapper;
+
     @Inject
-    CompanyRepository companyRepository;
-    @Inject
-    CompanyMapper companyMapper;
+    public CompanyService(CompanyRepository companyRepository, CompanyMapper companyMapper) {
+        this.companyRepository = companyRepository;
+        this.companyMapper = companyMapper;
+    }
 
     public List<CompanyDto> getAllCompanies() {
         return companyRepository.listAll()

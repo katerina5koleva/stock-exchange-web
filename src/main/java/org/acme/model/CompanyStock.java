@@ -53,7 +53,5 @@ public class CompanyStock {
     public LocalDate getStockCreatedAt() {
         return stockCreatedAt;
     }
-    public void setStockCreatedAt(LocalDate now) {
-        this.stockCreatedAt = stockCreatedAt;
-    }
+    public void setStockCreatedAt(LocalDate now) {}
 }

@@ -16,15 +16,20 @@ import java.time.LocalDate;
 
 @ApplicationScoped
 public class CompanyStockService {
+    private final CompanyStockRepository companyStockRepository;
+    private final CompanyService companyService;
+    private final FinnhubService finnhubService;
+
     @Inject
-    CompanyRepository companyRepository;
-    @Inject
-    CompanyStockRepository companyStockRepository;
-    @Inject
-    CompanyService companyService;
-    @Inject
-    @RestClient
-    FinnhubService finnhubService;
+    public CompanyStockService(
+            CompanyStockRepository companyStockRepository,
+            CompanyService companyService,
+            @RestClient FinnhubService finnhubService
+    ) {
+        this.companyStockRepository = companyStockRepository;
+        this.companyService = companyService;
+        this.finnhubService = finnhubService;
+    }
 
     @ConfigProperty(name = "finnhub.api.key")
     String apiKey;
