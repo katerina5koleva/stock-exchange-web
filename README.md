@@ -69,7 +69,7 @@ Create your first JPA entity
 [Related guide section...](https://quarkus.io/guides/hibernate-orm)
 
 [Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-<3
+<33
 
 
 ### REST
