@@ -1,5 +1,6 @@
 package org.acme;
 
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
@@ -32,6 +33,12 @@ public class CompanyServiceTest {
     CompanyMapper companyMapper;
     @InjectMocks
     CompanyService companyService;
+
+    @BeforeEach
+    @Transactional
+    void clean() {
+        companyRepository.deleteAll();
+    }
 
     @Test
     public void getAllCompanies() {

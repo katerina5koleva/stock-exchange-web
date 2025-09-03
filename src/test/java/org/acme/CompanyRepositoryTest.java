@@ -3,6 +3,7 @@ package org.acme;
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import org.acme.model.Company;
 import org.acme.repository.CompanyRepository;
@@ -18,6 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CompanyRepositoryTest {
     @Inject
     public CompanyRepository companyRepository;
+
+    @BeforeEach
+    @Transactional
+    void clean() {
+        companyRepository.deleteAll();
+    }
 
     @Test
     public void listAll(){

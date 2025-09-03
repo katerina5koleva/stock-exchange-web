@@ -30,7 +30,7 @@ public class CompanyStockServiceTest {
     CompanyStockRepository companyStockRepository;
     @Mock
     CompanyService companyService;
-    @InjectMock
+    @Mock
     FinnhubService finnhubService;
     @InjectMocks
     CompanyStockService companyStockService;
@@ -71,7 +71,7 @@ public class CompanyStockServiceTest {
                 1000L,
                 200L
         );
-        Mockito.when(finnhubService.getCompanyStock(Mockito.anyString(), Mockito.any())).thenReturn(finnhubStockDto);
+        Mockito.when(finnhubService.getCompanyStock(any(), any())).thenReturn(finnhubStockDto);
 
         CompanyStockDto result = companyStockService.getCompanyStock(1L);
 
@@ -81,7 +81,7 @@ public class CompanyStockServiceTest {
 
         verify(companyService, times(2)).getCompanyEntityById(1L);
         verify(companyStockRepository).findByCompanyIdAndCurrentDate(1L, LocalDate.now());
-        verify(finnhubService).getCompanyStock(anyString(), nullable(String.class));
+        verify(finnhubService).getCompanyStock(any(),any());
         verify(companyStockRepository).persist(any(CompanyStock.class));
     }
 
