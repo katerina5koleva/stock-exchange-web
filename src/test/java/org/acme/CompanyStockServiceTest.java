@@ -1,5 +1,6 @@
 package org.acme;
 
+import io.quarkus.test.InjectMock;
 import jakarta.inject.Inject;
 import org.acme.dto.CompanyStockDto;
 import org.acme.dto.FinnhubStockDto;
@@ -29,7 +30,7 @@ public class CompanyStockServiceTest {
     CompanyStockRepository companyStockRepository;
     @Mock
     CompanyService companyService;
-    @Mock
+    @InjectMock
     FinnhubService finnhubService;
     @InjectMocks
     CompanyStockService companyStockService;
