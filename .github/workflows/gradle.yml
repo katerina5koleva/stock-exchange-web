@@ -23,6 +23,7 @@ jobs:
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_URL: ${{ secrets.DB_URL }}
       FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+      TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
 
     steps:
     - uses: actions/checkout@v4
