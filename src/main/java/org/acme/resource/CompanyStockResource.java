@@ -17,7 +17,7 @@ public class CompanyStockResource {
         this.companyStockService = companyStockService;
     }
 
-    @PUT
+    @GET
     @Path("/{companyId}")
     public CompanyStockDto getCompanyStock(@PathParam("companyId") Long companyId) {
         return companyStockService.getCompanyStock(companyId);
