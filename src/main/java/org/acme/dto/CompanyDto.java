@@ -12,14 +12,14 @@ public class CompanyDto {
     private String email;
 
     public CompanyDto() {}
-    public CompanyDto(Long id, String name, String country, String symbol, LocalDateTime createdAt, String website, String email) {
+    public CompanyDto(Long id, String name, String country, String symbol, LocalDateTime createdAt, String email, String website) {
         this.id = id;
         this.name = name;
         this.country = country;
         this.symbol = symbol;
         this.createdAt = createdAt;
-        this.website = website;
         this.email = email;
+        this.website = website;
     }
 
     public Long getId() {

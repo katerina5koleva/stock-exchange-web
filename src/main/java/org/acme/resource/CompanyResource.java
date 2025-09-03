@@ -1,6 +1,7 @@
 package org.acme.resource;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -27,7 +28,7 @@ public class CompanyResource {
     }
 
     @POST
-    public Response create(CompanyDto companyDto) {
+    public Response create(@Valid CompanyDto companyDto) {
         CompanyDto createdCompany = companyService.addCompany(companyDto);
         return Response.status(Response.Status.CREATED)
                        .entity(createdCompany)
@@ -36,7 +37,7 @@ public class CompanyResource {
 
     @PUT
     @Path("/{id}")
-    public CompanyDto update(@PathParam("id") Long id, CompanyDto companyDto) {
+    public CompanyDto update(@PathParam("id") Long id, @Valid CompanyDto companyDto) {
         return companyService.updateCompany(id, companyDto);
     }
 }

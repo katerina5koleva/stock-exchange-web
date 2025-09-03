@@ -3,6 +3,8 @@ package org.acme.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 import org.acme.dto.CompanyStockDto;
 import org.acme.dto.FinnhubStockDto;
 import org.acme.model.Company;
@@ -34,27 +36,34 @@ public class CompanyStockService {
     @ConfigProperty(name = "finnhub.api.key")
     String apiKey;
 
-    private CompanyStock getOrCreateTodayStock(Company company) {
+    private CompanyStockDto getOrCreateTodayStock(Company company) {
         LocalDate today = LocalDate.now();
         CompanyStock stock = companyStockRepository.findByCompanyIdAndCurrentDate(company.getId(), today);
         if (stock != null){
-            return stock;
+            return new CompanyStockDto(company, stock);
         }
         FinnhubStockDto finnhubStock = finnhubService.getCompanyStock(company.getSymbol(), apiKey);
-        CompanyStock newStock = new CompanyStock(
-                company,
+        CompanyStockDto newStockDto = addStock(
+                company.getId(),
                 finnhubStock.getMarketCapitalization(),
                 finnhubStock.getShareOutstanding(),
-                LocalDate.now()
+                today
         );
-        companyStockRepository.persist(newStock);
-        return newStock;
+        return newStockDto;
+    }
+
+    @Transactional
+    public CompanyStockDto addStock(Long companyId, Long marketCapitalization, Long shareOutstanding, LocalDate date) {
+        Company company = companyService.getCompanyEntityById(companyId);
+        CompanyStock stock = new CompanyStock(company, marketCapitalization, shareOutstanding, date);
+        companyStockRepository.persist(stock);
+        companyStockRepository.flush();
+        return new CompanyStockDto(company, stock);
     }
 
     @Transactional
     public CompanyStockDto getCompanyStock(Long companyId) {
         Company company = companyService.getCompanyEntityById(companyId);
-        CompanyStock stock = getOrCreateTodayStock(company);
-        return new CompanyStockDto(company, stock);
+        return getOrCreateTodayStock(company);
     }
 }
