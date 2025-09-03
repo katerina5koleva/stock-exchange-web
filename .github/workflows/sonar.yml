@@ -16,6 +16,7 @@ jobs:
       DB_URL: ${{ secrets.DB_URL }}
       FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
       
     steps:
       - uses: actions/checkout@v4
