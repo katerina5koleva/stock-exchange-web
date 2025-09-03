@@ -10,37 +10,37 @@ jobs:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: catsareBAE
+          POSTGRES_DB: test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    
     env:
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_URL: ${{ secrets.DB_URL }}
-      FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+      DB_USERNAME: postgres
+      DB_PASSWORD: catsareBAE
+      DB_URL: jdbc:postgresql://localhost:5432/test
+      FINNHUB_API_KEY: mocking
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+      TEST_DB_URL: jdbc:postgresql://localhost:5432/test
       
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper/
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
-
       - name: Build and run SonarCloud analysis
         run: ./gradlew build sonarqube -Dsonar.organization=katerina5koleva -Dsonar.projectKey=katerina5koleva_stock-exchange-web -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-
-
